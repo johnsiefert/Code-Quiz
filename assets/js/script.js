@@ -35,5 +35,47 @@ let lastQ = false;
 let submitBtn = document.querySelector("#submit");
 let highscore;
 let highscoreBtn = document.querySelector("#highscores");
-let scoreDiv = document.querySelector("#scoreDiv");
+let scoresDiv = document.querySelector("#scoreDiv");
+
+highscoreBtn.addEventListener("click", function(){
+    document.getElementById("highscoreDisp").innerHTML = "";
+    let hsList = JSON.parse(localStorage.getItem("Highscore")).highscoreArr || [];
+    if (scoresDiv.style.display === "none"){
+        scoresDiv.style.display === "flex";
+        hsList.map(a => {
+            let ele = document.createElement ("h3");
+            let node = document.createTextNode(a);
+            ele.appendChild(node);
+            document.getElementById("highscoreDisp").appendChild(ele);
+        });
+    } else{
+        scoresDiv.style.display = "none";
+
+    }
+    console.log("Hello are you working?");
+});
+
+submitBtn.addEventListener("click", function(){
+    if (localStorage.getItem("Highscore")=== null){
+        localStorage.setItem("Highscore", JSON.stringify({
+            highscore: 0,
+            highscoreArr: []
+        }));
+    }
+
+    let input = document.querySelector("#initials").ariaValueMax;
+    let score = totalPoints + totalTime;
+    highscore = JSON.parse(localStorage.getItem("Highscore")).highscore;
+    let allscores = JSON.parse(localStorage.getItem("Highscore")).highscoreArr;
+
+    if (score > highscore) {
+            highscore = score;
+    }
+    allscores.push(input + score);
+    localStorage.setItem('Highscore', JSON.stringify({
+        highscore,
+        highscoreArr: allscores
+    }));
+    startAgain();
+});
 
