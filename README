@@ -1,0 +1,18 @@
+# Code-Quiz
+
+Includes the following:
+BootStrap
+JQuery
+CSS
+HTML
+Javascript
+
+Also includes: Interval timer, also subtracts when the question is answered incorrectly. Saves the High Score to the local storage.
+
+
+Link to the site:
+https://johnsiefert.github.io/Code-Quiz/
+
+Screenshot of the page:
+
+![screenshot](./assets/images/Code-Quiz.png) 

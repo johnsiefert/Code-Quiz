@@ -1,4 +1,3 @@
-// questions for the quiz
 let questions = [
     {
         title: "Commonly used data types DO NOT include:",
@@ -27,9 +26,9 @@ let questions = [
     }
 ];
 
-//setting up variables for quiz
+
 let totalTime = 59;
-let start =  document.querySelector("#StartQuiz");
+let start = document.querySelector("#startQuiz");
 let count = 0;
 let totalPoints = 0;
 let scoreH1 = document.querySelector("#score");
@@ -37,90 +36,88 @@ let lastQ = false;
 let submitBtn = document.querySelector("#submit");
 let highscore;
 let highscoreBtn = document.querySelector("#highscores");
-let scoresDiv = document.querySelector("#scoreDiv");
+let scoresDiv = document.querySelector("#scoresDiv");
 
-//High score and display scores
-highscoreBtn.addEventListener("click", function(){
-    document.getElementById("highscoreDisp").innerHTML = "";
-    let hsList = JSON.parse(localStorage.getItem("Highscore")).highscoreArr || [];
-    if (scoresDiv.style.display === "none"){
-        scoresDiv.style.display === "flex";
-        hsList.map(a => {
-            let ele = document.createElement ("h3");
-            let node = document.createTextNode(a);
-            ele.appendChild(node);
-            document.getElementById("highscoreDisp").appendChild(ele);
-        });
-    } else{
-        scoresDiv.style.display = "none";
+highscoreBtn.addEventListener("click", function () {
+	document.getElementById("highscoreDisp").innerHTML = "";
+	let hsList = JSON.parse(localStorage.getItem("Highscore")).highscoreArr || [];
+	if (scoresDiv.style.display === "none") {
+		scoresDiv.style.display = "flex";
+		hsList.map(a => {
+			var ele = document.createElement("h3");
+			var node = document.createTextNode(a);
+			ele.appendChild(node);
+			document.getElementById("highscoreDisp").appendChild(ele);
+		});
+	} else {
+		scoresDiv.style.display = "none";
 
-    }
-    console.log("Hello are you working?");
+	}
+	console.log("Hello");
 });
 
-//submit button for the High Score
-submitBtn.addEventListener("click", function(){
-    if (localStorage.getItem("Highscore")=== null){
-        localStorage.setItem("Highscore", JSON.stringify({
-            highscore: 0,
-            highscoreArr: []
-        }));
-    }
+submitBtn.addEventListener("click", function () {
+	if (localStorage.getItem("Highscore") === null) {
+		localStorage.setItem("Highscore", JSON.stringify({
+			highscore: 0,
+			highscoreArr: []
+		}));
+	}
 
-    let input = document.querySelector("#initials").ariaValueMax;
-    let score = totalPoints + totalTime;
-    highscore = JSON.parse(localStorage.getItem("Highscore")).highscore;
-    let allscores = JSON.parse(localStorage.getItem("Highscore")).highscoreArr;
+	let input = document.querySelector("#initials").value;
+	let score = totalPoints + totalTime;
+	highscore = JSON.parse(localStorage.getItem("Highscore")).highscore;
+	let allscores = JSON.parse(localStorage.getItem("Highscore")).highscoreArr;
 
-    if (score > highscore) {
-            highscore = score;
-    }
-    allscores.push(input + score);
-    localStorage.setItem('Highscore', JSON.stringify({
-        highscore,
-        highscoreArr: allscores
-    }));
-    startAgain();
+	if (score > highscore) {
+		highscore = score;
+	}
+	allscores.push(input + score);
+	localStorage.setItem('Highscore', JSON.stringify({
+		highscore,
+		highscoreArr: allscores
+	}));
+
+	startAgain();
 });
+
 
 let startOverScreen = document.querySelector("#startOver");
 let restartBtn = document.querySelector("#restart");
 
-// function to restart the game
-function startAgain(){
-    endQuiz.style.display = "none";
-    startOverScreen.style.display = "flex";
+function startAgain() {
+	endQuiz.style.display = "none";
+	startOverScreen.style.display = "flex";
 }
 
-//Restart Event
-restartBtn.addEventListener("click", function(){
-    totalTime = 75;
-    count = 0;
-    totalPoints = 0;
-    lastQ = false;
-    startDiv.style.display = "block"
-    quizDiv.style.display = "none"
-    startOverScreen.style.display = "none";
+restartBtn.addEventListener("click", function () {
+	totalTime = 75;
+	count = 0;
+	totalPoints = 0;
+	lastQ = false;
+	startDiv.style.display = "block";
+	quizDiv.style.display = "none";
+	startOverScreen.style.display = "none";
 });
 
 endGame = () => {
-        lastQ = true;
-        quizDiv.style.display ="none"
-        endQuiz.style.display = "block";
-        let score = totalPoints = totalTime;
-        scoreH1.textContent = score;
+	lastQ = true;
+	quizDiv.style.display = "none";
+	endQuiz.style.display = "block";
+	let score = totalPoints + totalTime;
+	scoreH1.textContent = score;
 };
 
 answeredRight = () => {
-    alert("YOU GOT IT RIGHT!");
-    totalPoints += 10;
-    console.log(highscore);
-    count++;
-    if (count === questions.length){
-                endgame();
-        }else{
-            generateQuestions();
-        }
+	alert("YOU GOT IT RIGHT!");
+	totalPoints += 10;
+	console.log(highscore);
+	count++;
+	if (count === questions.length) {
+		endGame();
+	} else {
+		generateQuestions();
+	}
 };
 
 answeredWrong = () => {
@@ -136,29 +133,28 @@ answeredWrong = () => {
 };
 
 generateQuestions = () => {
-    document.getElementById("quizQ").innerHTML = questions[count].title;
-    document.getElementById("choiceBtns").innerHTML = "";
+	document.getElementById("quizQ").innerHTML = questions[count].title;
+	document.getElementById("choiceBtns").innerHTML = "";
 
-    questions [count].choices.map((choice, i) => {
-        let btn = document.createElement("button");
-        let textnode = document.createTextNode(choice);
-        btn.appendChild(textnode);
-        document.getElementById("choiceBtns").appendChild(btn);
-        btn.setAttribute("data", choice);
-        btn.setAttribute("id", 'btn${i}');
-        btn.setAttribute("anwser", questions[count].answer);
+	questions[count].choices.map((choice, i) => {
+		let btn = document.createElement("button");
+		let textnode = document.createTextNode(choice);
+		btn.appendChild(textnode);
+		document.getElementById("choiceBtns").appendChild(btn);
+		btn.setAttribute("data", choice);
+		btn.setAttribute("id", `btn${i}`);
+		btn.setAttribute("answer", questions[count].answer);
 
-        document.querySelector('btn${i}').addEventListener("click", function (e){
-            console.log(e.target.getAttribute( "data"));
-            if (e.target.getAttribute("data") === e.target.getAttribute("anwser")){
-                answeredRight ();
-             }else{
-                 answeredWrong ();
-             }
-        });
-    });
+		document.querySelector(`#btn${i}`).addEventListener("click", function (e) {
+			console.log(e.target.getAttribute("data"));
+			if (e.target.getAttribute("data") === e.target.getAttribute("answer")) {
+				answeredRight();
+			} else {
+				answeredWrong();
+			}
+		});
+	});
 };
-
 let timerSpan = document.querySelector("#timer");
 let startDiv = document.querySelector("#startDiv");
 let quizDiv = document.querySelector("#quizDiv");
