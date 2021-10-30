@@ -135,3 +135,50 @@ answeredWrong = () => {
 	}
 };
 
+generateQuestions = () => {
+    document.getElementById("quizQ").innerHTML = questions[count].title;
+    document.getElementById("choiceBtns").innerHTML = "";
+
+    questions [count].choices.map((choice, i) => {
+        let btn = document.createElement("button");
+        let textnode = document.createTextNode(choice);
+        btn.appendChild(textnode);
+        document.getElementById("choiceBtns").appendChild(btn);
+        btn.setAttribute("data", choice);
+        btn.setAttribute("id", 'btn${i}');
+        btn.setAttribute("anwser", questions[count].answer);
+
+        document.querySelector('btn${i}').addEventListener("click", function (e){
+            console.log(e.target.getAttribute( "data"));
+            if (e.target.getAttribute("data") === e.target.getAttribute("anwser")){
+                answeredRight ();
+             }else{
+                 answeredWrong ();
+             }
+        });
+    });
+};
+
+let timerSpan = document.querySelector("#timer");
+let startDiv = document.querySelector("#startDiv");
+let quizDiv = document.querySelector("#quizDiv");
+let endQuiz = document.querySelector("#endQuiz");
+
+start.addEventListener("click", function () {
+	console.log(totalTime);
+	startDiv.style.display = "none";
+	quizDiv.style.display = "block";
+	generateQuestions();
+
+	let interval = setInterval(function () {
+		totalTime--;
+		timerSpan.innerHTML = totalTime;
+		console.log("tick .. " + totalTime);
+		if (totalTime === 0 || lastQ) {
+			clearInterval(interval);
+			console.log("Time's out");
+			endGame();
+		}
+	}, 1000);
+
+});
