@@ -1,3 +1,4 @@
+// questions for the quiz
 let questions = [
     {
         title: "Commonly used data types DO NOT include:",
@@ -26,6 +27,7 @@ let questions = [
     }
 ];
 
+//setting up variables for quiz
 let totalTime = 59;
 let start =  document.querySelector("#StartQuiz");
 let count = 0;
@@ -37,6 +39,7 @@ let highscore;
 let highscoreBtn = document.querySelector("#highscores");
 let scoresDiv = document.querySelector("#scoreDiv");
 
+//High score and display scores
 highscoreBtn.addEventListener("click", function(){
     document.getElementById("highscoreDisp").innerHTML = "";
     let hsList = JSON.parse(localStorage.getItem("Highscore")).highscoreArr || [];
@@ -55,6 +58,7 @@ highscoreBtn.addEventListener("click", function(){
     console.log("Hello are you working?");
 });
 
+//submit button for the High Score
 submitBtn.addEventListener("click", function(){
     if (localStorage.getItem("Highscore")=== null){
         localStorage.setItem("Highscore", JSON.stringify({
@@ -78,4 +82,56 @@ submitBtn.addEventListener("click", function(){
     }));
     startAgain();
 });
+
+let startOverScreen = document.querySelector("#startOver");
+let restartBtn = document.querySelector("#restart");
+
+// function to restart the game
+function startAgain(){
+    endQuiz.style.display = "none";
+    startOverScreen.style.display = "flex";
+}
+
+//Restart Event
+restartBtn.addEventListener("click", function(){
+    totalTime = 75;
+    count = 0;
+    totalPoints = 0;
+    lastQ = false;
+    startDiv.style.display = "block"
+    quizDiv.style.display = "none"
+    startOverScreen.style.display = "none";
+});
+
+endGame = () => {
+        lastQ = true;
+        quizDiv.style.display ="none"
+        endQuiz.style.display = "block";
+        let score = totalPoints = totalTime;
+        scoreH1.textContent = score;
+};
+
+answeredRight = () => {
+    alert("YOU GOT IT RIGHT!");
+    totalPoints += 10;
+    console.log(highscore);
+    count++;
+    if (count === questions.length){
+                endgame();
+        }else{
+            generateQuestions();
+        }
+};
+
+answeredWrong = () => {
+	alert("YOU GOT IT WRONG!");
+	totalPoints -= 5;
+	count++;
+	totalTime -= 10;
+	if (count === questions.length) {
+		endGame();
+	} else {
+		generateQuestions();
+	}
+};
 
