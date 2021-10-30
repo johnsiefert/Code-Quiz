@@ -25,3 +25,15 @@ let questions = [
         answer: "Cascading"
     }
 ];
+
+let totalTime = 59;
+let start =  document.querySelector("#StartQuiz");
+let count = 0;
+let totalPoints = 0;
+let scoreH1 = document.querySelector("#score");
+let lastQ = false;
+let submitBtn = document.querySelector("#submit");
+let highscore;
+let highscoreBtn = document.querySelector("#highscores");
+let scoreDiv = document.querySelector("#scoreDiv");
+
